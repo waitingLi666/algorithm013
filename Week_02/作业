@@ -1,0 +1,152 @@
+#有效的字母异位词
+#解法一：将字符串转为数组排序后比较
+public boolean isAnagram(String s, String t) {
+        char[] sArr=s.toCharArray();
+        char[] tArr=t.toCharArray();
+        Arrays.sort(sArr);
+        Arrays.sort(tArr);
+        return Arrays.equals(sArr,tArr);
+    }
+#解法二：使用hashMap，统计每个字符出现的次数进行比较
+public boolean isAnagram(String s, String t) {
+        Map<Character,Integer> map = new HashMap<>();
+        for(int i=0;i<s.length();i++){
+            char sTemp = s.charAt(i);
+            map.put(sTemp,map.getOrDefault(sTemp,0)+1);
+        }
+        for(int j=0;j<t.length();j++){
+            char tTemp = t.charAt(j);
+            map.put(tTemp,map.getOrDefault(tTemp,0)-1);
+            if(map.getOrDefault(tTemp,0)<0){
+                return false;
+            }else if(map.get(tTemp)==0){
+                map.remove(tTemp);
+            }
+        }
+        return map.isEmpty();
+    }
+#解法三：使用数组，因为字母的数量是固定的26个。性质同解法二
+public boolean isAnagram(String s, String t) {
+        if(s.length()!=t.length()){
+            return false;
+        }
+        int[] arr=new int[26];
+        for(int i=0;i<s.length();i++){
+            char sTemp = s.charAt(i);
+            arr[sTemp-'a']++;
+            char tTemp = t.charAt(i);
+            arr[tTemp-'a']--;
+        }
+        for(int value:arr){
+            if(value!=0){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+ #两数之和
+ #解法：使用hashMap实现
+ public int[] twoSum(int[] nums, int target) {
+        Map<Integer,Integer> map=new HashMap<Integer,Integer>();
+        for(int i=0;i<nums.length;i++){
+            if(map.containsKey(target-nums[i])){
+                int j=map.get(target-nums[i]);
+                if(i!=j){
+                    return new int[]{i,j};
+                }
+            }
+            map.put(nums[i],i);
+        }
+        return null;
+    }
+
+
+#字母异位词分组
+public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String,List<String>> map=new HashMap<>();
+        for(String s: strs){
+            String temp = anagram(s);
+            if(!map.containsKey(temp))map.put(temp,new ArrayList<>());
+            map.get(temp).add(s);
+        }
+        return new ArrayList<>(map.values());
+    }
+    private String anagram(String s){
+        char[] arr=s.toCharArray();
+        Arrays.sort(arr);
+        return String.valueOf(arr);
+    }
+
+
+#二叉树中序遍历
+#解法一：递归
+List<Integer> list = new ArrayList<>();
+    public List<Integer> inorderTraversal(TreeNode root) {
+        if(root == null){
+            return list;
+        }
+        if(root.left!=null){
+            inorderTraversal(root.left);
+        }
+        list.add(root.val);
+        if(root.right!=null){
+            inorderTraversal(root.right);
+        }
+        return list;
+    }
+#解法二：栈
+public List<Integer> inorderTraversal(TreeNode root) {
+        List < Integer > res = new ArrayList < > ();
+        Stack < TreeNode > stack = new Stack < > ();
+        TreeNode curr = root;
+        while (curr != null || !stack.isEmpty()) {
+            while (curr != null) {
+                stack.push(curr);
+                curr = curr.left;
+            }
+            curr = stack.pop();
+            res.add(curr.val);
+            curr = curr.right;
+        }
+        return res;
+    }
+
+
+
+#二叉树的前序遍历
+#解法：递归
+List<Integer> list = new ArrayList<>();
+public List<Integer> preorderTraversal(TreeNode root) {
+        if(root==null){
+            return list;
+        }
+        list.add(root.val);
+        if(root.left!=null){
+            preorderTraversal(root.left);
+        }
+        if(root.right!=null){
+            preorderTraversal(root.right);
+        }
+        return list;
+    }
+
+
+#N叉树的层序遍历
+#解法：递归
+private List<List<Integer>> result = new ArrayList<>();
+public List<List<Integer>> levelOrder(Node root) {
+    if (root != null) method(root,0);
+    return result;
+}
+private void method(Node node, int level) {
+    if (result.size() <= level) {
+        result.add(new ArrayList<>());
+    }
+    result.get(level).add(node.val);
+    for (Node child : node.children) {
+        method(child, level + 1);
+    }
+}
+
