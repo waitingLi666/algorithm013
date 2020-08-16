@@ -1,0 +1,39 @@
+
+#二叉树的最近公共祖先
+#解法：递归，时间复杂度为O(N)，空间复杂度为O(N)，N为二叉树的节点数目
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+	if(root == null || p == root || q == root) return root;
+
+    TreeNode left = lowestCommonAncestor(root.left,p,q);
+    TreeNode right = lowestCommonAncestor(root.right,p,q);
+    
+    if(left == null)return right;
+    if(right == null)return left;
+    return root;
+}
+
+#组合
+#解法：回溯+剪枝，时间复杂度为O()，空间复杂度为O()
+List<List<Integer>> res = new LinkedList<>();
+int n,k;
+public List<List<Integer>> combine(int n, int k) {
+    this.n=n;
+    this.k=k;
+
+    backtrack(1,new LinkedList<Integer>());
+
+    return res;
+}
+private void backtrack(int index,LinkedList<Integer> temp){
+    if(temp.size()==k){
+        res.add(new LinkedList(temp));
+        return;
+    }
+
+    for(int i = index;i<=n-(k-temp.size())+1;i++){
+        temp.add(i);
+        backtrack(i+1,temp);
+        temp.removeLast();
+    }
+}
+
