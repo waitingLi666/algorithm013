@@ -13,7 +13,7 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 }
 
 #组合
-#解法：回溯+剪枝，时间复杂度为O()，空间复杂度为O()
+#解法：回溯+剪枝，时间复杂度为O(c(n,m))，空间复杂度为O(c(n,m))，说明公式c(n,m)表示组合概率
 List<List<Integer>> res = new LinkedList<>();
 int n,k;
 public List<List<Integer>> combine(int n, int k) {
